@@ -25,12 +25,20 @@
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { width:100%; height:100%; overflow:hidden; }
+  html, body { width:100%; height:100%; }
   body {
     background: var(--negro);
     color: var(--blanco);
     font-family: 'Inter', -apple-system, sans-serif;
   }
+
+  /* ════════════════════════════════════════
+     DESKTOP — SLIDE DECK
+  ════════════════════════════════════════ */
+
+  .mobile-view { display: none; }
+
+  body.is-desktop { overflow: hidden; }
 
   /* ── DECK WRAPPER ── */
   .deck {
@@ -268,113 +276,191 @@
   .horiz-card h4 { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--blanco); margin-bottom: 10px; }
   .horiz-card p { font-size: 13px; color: var(--gris2); line-height: 1.8; }
 
+
+  /* ════════════════════════════════════════
+     MOBILE — LANDING PAGE VERTICAL
+  ════════════════════════════════════════ */
+
   @media (max-width: 768px) {
 
-    /* ── NAV ── */
-    .topbar { padding: 0 20px; }
-    .topbar-tag { display: none; }
-    .arrow { display: none; }
-    .dots { bottom: 14px; gap: 8px; }
-    .dot { width: 5px; height: 5px; }
+    /* Ocultar deck, mostrar mobile */
+    .deck, .topbar, .dots, .arrow, .progress { display: none !important; }
+    .mobile-view { display: block; }
+    body { overflow-y: auto; }
 
-    /* ── COVER ── */
-    .s-cover {
-      grid-template-columns: 1fr;
-      position: relative;
+    /* ── TOPBAR MOBILE ── */
+    .m-topbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; height: 52px;
+      background: rgba(8,8,8,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--borde2);
+    }
+    .m-brand { font-size: 10px; letter-spacing: 4px; color: var(--oro); text-transform: uppercase; }
+    .m-tag { font-size: 10px; color: var(--gris2); letter-spacing: 1px; }
+
+    /* ── HERO ── */
+    .m-hero {
+      position: relative; height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
       overflow: hidden;
     }
-    .cover-right {
-      position: absolute; inset: 0; z-index: 0;
-      display: block;
+    .m-hero-img {
+      position: absolute; inset: 0;
     }
-    .cover-right img { filter: brightness(0.28); }
-    .cover-right::after {
-      background: linear-gradient(to top, var(--negro) 30%, transparent 100%);
+    .m-hero-img img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      filter: brightness(0.3);
     }
-    .cover-left {
+    .m-hero-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, var(--negro) 25%, transparent 70%);
+    }
+    .m-hero-body {
       position: relative; z-index: 1;
-      padding: 0 24px 72px;
-      justify-content: flex-end;
-      min-height: 100%;
-      background: transparent;
+      padding: 0 24px 48px;
     }
-    .cover-left::before { display: none; }
-    .cover-eyebrow { margin-bottom: 18px; }
-    .cover-left h1 { font-size: 38px; margin-bottom: 14px; }
-    .cover-left .sub { font-size: 13px; line-height: 1.7; margin-bottom: 28px; }
-    .meta-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
-    .meta-item .val { font-size: 13px; }
+    .m-eyebrow {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+    .m-eyebrow .line { width: 24px; height: 1px; background: var(--oro); }
+    .m-eyebrow span { font-size: 9px; letter-spacing: 4px; color: var(--oro); text-transform: uppercase; }
+    .m-hero-body h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 40px; font-weight: 400; line-height: 1.08;
+      margin-bottom: 14px;
+    }
+    .m-hero-body h1 em { color: var(--oro); font-style: normal; }
+    .m-hero-body p {
+      font-size: 13px; color: var(--gris3); line-height: 1.7; margin-bottom: 28px;
+    }
+    .m-meta {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px;
+    }
+    .m-meta-item .lbl {
+      font-size: 8px; letter-spacing: 3px; color: var(--gris);
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .m-meta-item .val { font-size: 13px; color: var(--blanco); }
 
-    /* ── FASE SLIDES ── */
-    .s-fase {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-      overflow: hidden;
+    /* ── FASE SECTIONS ── */
+    .m-fase {
+      border-top: 1px solid var(--borde2);
     }
-    .fase-left {
-      padding: 20px 24px 16px;
-      border-right: none;
+    .m-fase-header {
+      padding: 28px 24px 22px;
+      background: var(--negro3);
       border-bottom: 1px solid var(--borde);
-      justify-content: flex-start;
-      overflow: visible;
+      position: relative; overflow: hidden;
     }
-    .fase-left::before { font-size: 100px; bottom: -10px; left: -6px; }
-    .fase-num { margin-bottom: 6px; }
-    .fase-fecha { margin-bottom: 10px; }
-    .fase-left h2 { font-size: 24px; line-height: 1.1; margin-bottom: 10px; }
-    .fase-desc { display: none; }
-    .fase-img { display: none; }
+    .m-fase-header::after {
+      content: attr(data-num);
+      position: absolute; right: -8px; top: -16px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 110px; color: rgba(201,168,76,0.05);
+      line-height: 1; pointer-events: none;
+    }
+    .m-fase-num {
+      font-size: 9px; letter-spacing: 4px; color: var(--oro);
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .m-fase-fecha {
+      display: inline-flex; align-items: center;
+      padding: 6px 12px;
+      background: var(--oro-pale); border: 1px solid var(--borde);
+      font-size: 11px; color: var(--oro); letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .m-fase-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px; font-weight: 400; line-height: 1.1;
+    }
+    .m-fase-header h2 em { color: var(--oro); font-style: normal; }
 
-    .fase-right {
-      padding: 12px 20px 72px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      justify-content: flex-start;
+    .m-items {
+      padding: 0 20px;
+      background: var(--negro2);
     }
-    .item { padding: 12px 0; gap: 12px; }
-    .item-icon { width: 30px; height: 30px; font-size: 13px; flex-shrink: 0; }
-    .item-title { font-size: 13px; margin-bottom: 3px; }
-    .item-sub { font-size: 12px; line-height: 1.6; }
-    .tag { font-size: 9px; padding: 2px 7px; margin-left: 6px; }
+    .m-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 18px 0; border-bottom: 1px solid var(--borde2);
+    }
+    .m-item:last-child { border-bottom: none; }
+    .m-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--negro3); border: 1px solid var(--borde);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0; margin-top: 1px;
+    }
+    .m-body { flex: 1; }
+    .m-title {
+      font-size: 14px; color: var(--blanco); font-weight: 500;
+      margin-bottom: 5px; line-height: 1.4;
+    }
+    .m-sub {
+      font-size: 12px; color: var(--gris2); line-height: 1.65;
+    }
+    .m-tag {
+      display: inline-block; font-size: 9px; letter-spacing: 1px;
+      padding: 2px 8px; margin-left: 6px; vertical-align: middle;
+    }
+    .m-tag.now { background: rgba(201,168,76,0.12); color: var(--oro); }
+    .m-tag.done { background: rgba(82,196,138,0.1); color: var(--verde); }
+    .m-tag.ugc { background: rgba(100,160,255,0.1); color: #7EB8F7; }
 
     /* ── HORIZONTE ── */
-    .s-horizonte {
-      padding: 72px 24px 72px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      justify-content: flex-start;
-      align-items: flex-start;
+    .m-horizonte {
+      padding: 36px 24px 20px;
+      border-top: 1px solid var(--borde2);
     }
-    .s-horizonte h2 { font-size: 30px; margin-bottom: 12px; }
-    .s-horizonte .sub { font-size: 13px; line-height: 1.7; margin-bottom: 28px; }
-    .horiz-cards { grid-template-columns: 1fr; }
-    .horiz-card { padding: 22px 18px; }
-    .horiz-card h4 { font-size: 17px; }
-    .horiz-card p { font-size: 12px; line-height: 1.7; }
+    .m-horizonte h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px; font-weight: 400; line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .m-horizonte h2 em { color: var(--oro); font-style: normal; }
+    .m-horizonte .m-sub-txt {
+      font-size: 13px; color: var(--gris3); line-height: 1.7; margin-bottom: 24px;
+    }
+    .m-hcards { display: flex; flex-direction: column; gap: 1px; background: var(--borde2); }
+    .m-hcard { background: var(--negro2); padding: 22px 20px; }
+    .m-hcard .hc-num {
+      font-size: 9px; letter-spacing: 3px; color: var(--gris);
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .m-hcard h4 {
+      font-family: 'DM Serif Display', serif; font-size: 18px;
+      color: var(--blanco); margin-bottom: 8px;
+    }
+    .m-hcard p { font-size: 12px; color: var(--gris2); line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    .m-footer {
+      padding: 28px 24px;
+      border-top: 1px solid var(--borde2);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .m-footer-brand { font-size: 10px; letter-spacing: 3px; color: var(--oro); text-transform: uppercase; }
+    .m-footer-tag { font-size: 10px; color: var(--gris); }
   }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- ════════════════════════════════════════
+     DESKTOP — NAV + DECK
+════════════════════════════════════════ -->
 <nav class="topbar">
   <div class="topbar-brand">The Skin Club × DV</div>
   <div class="topbar-tag">Estrategia Q1 — 2026</div>
 </nav>
 
-<!-- PROGRESS -->
 <div class="progress"><div class="progress-fill" id="progress"></div></div>
-
-<!-- ARROWS -->
 <div class="arrow left" id="arrowLeft" onclick="prev()">&#8592;</div>
 <div class="arrow right" id="arrowRight" onclick="next()">&#8594;</div>
-
-<!-- DOTS -->
 <div class="dots" id="dots"></div>
 
-<!-- ══════════════════════════════════════
-     SLIDES
-══════════════════════════════════════ -->
 <div class="deck" id="deck">
 
   <!-- SLIDE 0 — COVER -->
@@ -385,27 +471,12 @@
         <span>Consultora DV — Plan de Arranque</span>
       </div>
       <h1>The Skin<br><em>Club.</em><br>Empieza ahora.</h1>
-      <p class="sub">
-        Lo que vamos a hacer juntos en el primer trimestre
-        de colaboración. Concreto, en orden, con fechas.
-      </p>
+      <p class="sub">Lo que vamos a hacer juntos en el primer trimestre de colaboración. Concreto, en orden, con fechas.</p>
       <div class="meta-grid">
-        <div class="meta-item">
-          <div class="lbl">Cliente</div>
-          <div class="val">The Skin Club — GDL</div>
-        </div>
-        <div class="meta-item">
-          <div class="lbl">Arranque formal</div>
-          <div class="val">Junio 2026</div>
-        </div>
-        <div class="meta-item">
-          <div class="lbl">Estratega</div>
-          <div class="val">Dante Vega — Consultora DV</div>
-        </div>
-        <div class="meta-item">
-          <div class="lbl">Iguala mensual</div>
-          <div class="val">$25,000 MXN</div>
-        </div>
+        <div class="meta-item"><div class="lbl">Cliente</div><div class="val">The Skin Club — GDL</div></div>
+        <div class="meta-item"><div class="lbl">Arranque formal</div><div class="val">Junio 2026</div></div>
+        <div class="meta-item"><div class="lbl">Estratega</div><div class="val">Dante Vega — Consultora DV</div></div>
+        <div class="meta-item"><div class="lbl">Iguala mensual</div><div class="val">$25,000 MXN</div></div>
       </div>
     </div>
     <div class="cover-right">
@@ -420,51 +491,16 @@
       <div class="fase-num">Fase 01</div>
       <div class="fase-fecha">7 — 14 Mayo</div>
       <h2>Preparación<br>y<br><em>grabaciones.</em></h2>
-      <p class="fase-desc">
-        Lo que se ejecuta antes del 15 de mayo, mientras Dante está en GDL.
-        Dos sesiones de grabación. Base lista para arrancar junio sin parar.
-      </p>
-      <div class="fase-img">
-        <img src="https://theskinclub.mx/cdn/shop/files/TheSkinClubJPG2048_0007.jpg" alt="Deep Cleanse" />
-      </div>
+      <p class="fase-desc">Lo que se ejecuta antes del 15 de mayo. Dos sesiones de grabación. Base lista para arrancar junio sin parar.</p>
+      <div class="fase-img"><img src="https://theskinclub.mx/cdn/shop/files/TheSkinClubJPG2048_0007.jpg" alt="Deep Cleanse" /></div>
     </div>
     <div class="fase-right">
       <div class="items">
-        <div class="item">
-          <div class="item-icon">📊</div>
-          <div class="item-body">
-            <div class="item-title">Análisis de redes y pauta <span class="tag done">En curso</span></div>
-            <div class="item-sub">Revisión del estado de la cuenta en Instagram y Facebook. Desempeño histórico de campañas. Identificar qué funcionó, qué no, y qué audiencias respondieron.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">📅</div>
-          <div class="item-body">
-            <div class="item-title">Contenido de mayo programado y estructurado</div>
-            <div class="item-sub">El contenido ya entregado por la creadora anterior no se desperdicia. Se programa y distribuye en el mes para que el feed no se pause. Mayo no queda en blanco.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🔑</div>
-          <div class="item-body">
-            <div class="item-title">Pago de iguala + accesos <span class="tag now">Pendiente</span></div>
-            <div class="item-sub">Confirmación del pago de la primera iguala. Acceso a datos de Shopify y métricas de la tienda para identificar el producto con más tracción.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🎙</div>
-          <div class="item-body">
-            <div class="item-title">Grabación 1 — La Tertulia</div>
-            <div class="item-sub">Los 3 fundadores en conversación. Historia de origen, motivaciones, ciencia detrás de la marca, resultados que los sorprendieron, qué sueñan para el club. Una sesión que genera decenas de clips.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🎬</div>
-          <div class="item-body">
-            <div class="item-title">Grabación 2 — Contenido de Valor</div>
-            <div class="item-sub">Contenido de los fundadores como ingenieros en biotecnología. Ingredientes, formulación, mitos del skincare, por qué sus productos son diferentes. El lado científico con voz humana.</div>
-          </div>
-        </div>
+        <div class="item"><div class="item-icon">📊</div><div class="item-body"><div class="item-title">Análisis de redes y pauta <span class="tag done">En curso</span></div><div class="item-sub">Revisión del estado de la cuenta en Instagram y Facebook. Desempeño histórico de campañas. Identificar qué funcionó, qué no, y qué audiencias respondieron.</div></div></div>
+        <div class="item"><div class="item-icon">📅</div><div class="item-body"><div class="item-title">Contenido de mayo programado y estructurado</div><div class="item-sub">El contenido ya entregado por la creadora anterior no se desperdicia. Se programa y distribuye en el mes para que el feed no se pause. Mayo no queda en blanco.</div></div></div>
+        <div class="item"><div class="item-icon">🔑</div><div class="item-body"><div class="item-title">Pago de iguala + accesos <span class="tag now">Pendiente</span></div><div class="item-sub">Confirmación del pago de la primera iguala. Acceso a datos de Shopify y métricas de la tienda para identificar el producto con más tracción.</div></div></div>
+        <div class="item"><div class="item-icon">🎙</div><div class="item-body"><div class="item-title">Grabación 1 — La Tertulia</div><div class="item-sub">Los 3 fundadores en conversación. Historia de origen, motivaciones, ciencia detrás de la marca, resultados que los sorprendieron, qué sueñan para el club. Una sesión que genera decenas de clips.</div></div></div>
+        <div class="item"><div class="item-icon">🎬</div><div class="item-body"><div class="item-title">Grabación 2 — Contenido de Valor</div><div class="item-sub">Contenido de los fundadores como ingenieros en biotecnología. Ingredientes, formulación, mitos del skincare, por qué sus productos son diferentes. El lado científico con voz humana.</div></div></div>
       </div>
     </div>
   </div>
@@ -475,44 +511,15 @@
       <div class="fase-num">Fase 02</div>
       <div class="fase-fecha">15 Mayo — 7 Junio</div>
       <h2>UGC y<br>estilo de<br><em>edición.</em></h2>
-      <p class="fase-desc">
-        Campaña de contenido UGC. Banco de material listo para publicar en junio.
-        El estilo de edición de la marca queda definido en estas semanas.
-      </p>
-      <div class="fase-img">
-        <img src="https://theskinclub.mx/cdn/shop/files/TheSkinClubJPG2048_0020.jpg" alt="Dermaboost" />
-      </div>
+      <p class="fase-desc">Campaña de contenido UGC. Banco de material listo para publicar en junio. El estilo de edición queda definido.</p>
+      <div class="fase-img"><img src="https://theskinclub.mx/cdn/shop/files/TheSkinClubJPG2048_0020.jpg" alt="Dermaboost" /></div>
     </div>
     <div class="fase-right">
       <div class="items">
-        <div class="item">
-          <div class="item-icon">🎥</div>
-          <div class="item-body">
-            <div class="item-title">Campaña UGC <span class="tag ugc">Los Mochis</span></div>
-            <div class="item-sub">Grabación de contenido orgánico y colaboraciones con personas con historia de piel. Sesiones con derechos de imagen long-term — el contenido sirve para feed orgánico y para pauta.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">📦</div>
-          <div class="item-body">
-            <div class="item-title">Entrega de producto a colaboradores</div>
-            <div class="item-sub">Kits seleccionados según perfil de piel. Instrucciones de documentación. Presupuesto estimado: $2,000 – $5,000 MXN en sesiones con derechos incluidos.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🎨</div>
-          <div class="item-body">
-            <div class="item-title">Estilo de edición definido</div>
-            <div class="item-sub">Las primeras semanas sirven para encontrar el lenguaje visual de la marca. Ritmo, paleta, transiciones, tipografía en pantalla. Cuando junio arranque, el estilo ya está claro.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🗂</div>
-          <div class="item-body">
-            <div class="item-title">Banco de contenido listo para junio</div>
-            <div class="item-sub">Al regresar el 7 de junio: clips de founders de las grabaciones + material UGC editado + estilo definido. La primera semana de junio arranca con contenido, no con improvisación.</div>
-          </div>
-        </div>
+        <div class="item"><div class="item-icon">🎥</div><div class="item-body"><div class="item-title">Campaña UGC <span class="tag ugc">Los Mochis</span></div><div class="item-sub">Grabación de contenido orgánico y colaboraciones con personas con historia de piel. Sesiones con derechos de imagen long-term — sirve para feed orgánico y para pauta.</div></div></div>
+        <div class="item"><div class="item-icon">📦</div><div class="item-body"><div class="item-title">Entrega de producto a colaboradores</div><div class="item-sub">Kits seleccionados según perfil de piel. Instrucciones de documentación. Presupuesto estimado: $2,000 – $5,000 MXN en sesiones con derechos incluidos.</div></div></div>
+        <div class="item"><div class="item-icon">🎨</div><div class="item-body"><div class="item-title">Estilo de edición definido</div><div class="item-sub">Las primeras semanas sirven para encontrar el lenguaje visual de la marca. Ritmo, paleta, transiciones, tipografía en pantalla. Cuando junio arranque, el estilo ya está claro.</div></div></div>
+        <div class="item"><div class="item-icon">🗂</div><div class="item-body"><div class="item-title">Banco de contenido listo para junio</div><div class="item-sub">Al regresar el 7 de junio: clips de founders + material UGC editado + estilo definido. La primera semana arranca con contenido, no con improvisación.</div></div></div>
       </div>
     </div>
   </div>
@@ -523,51 +530,16 @@
       <div class="fase-num">Fase 03</div>
       <div class="fase-fecha">Segunda semana Junio</div>
       <h2>El club<br>cobra<br><em>vida.</em></h2>
-      <p class="fase-desc">
-        Contenido de dueños y UGC fluyen juntos. Se buscan los creativos ganadores.
-        Alrededor del 15 de junio: primera evaluación de pauta.
-      </p>
-      <div class="fase-img">
-        <img src="https://theskinclub.mx/cdn/shop/files/Fondoblancojpg2048_0026.jpg" alt="Hydroglow" />
-      </div>
+      <p class="fase-desc">Contenido de dueños y UGC fluyen juntos. Se buscan los creativos ganadores. ~15 junio: evaluación de pauta.</p>
+      <div class="fase-img"><img src="https://theskinclub.mx/cdn/shop/files/Fondoblancojpg2048_0026.jpg" alt="Hydroglow" /></div>
     </div>
     <div class="fase-right">
       <div class="items">
-        <div class="item">
-          <div class="item-icon">📱</div>
-          <div class="item-body">
-            <div class="item-title">Contenido de dueños + UGC en el feed</div>
-            <div class="item-sub">Los dos bancos de contenido se publican de manera coordinada. El mix desplaza progresivamente el tono anterior — sin anunciar el cambio, siendo el cambio.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🔍</div>
-          <div class="item-body">
-            <div class="item-title">Testeo — búsqueda de creativos ganadores</div>
-            <div class="item-sub">Se analiza qué formatos generan más interacción, qué topics resuenan más y qué estilo de edición engancha. Los datos dictan las siguientes grabaciones.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">✨</div>
-          <div class="item-body">
-            <div class="item-title">Skin Quiz como protagonista del feed</div>
-            <div class="item-sub">El cuestionario de la web se vuelve el lead magnet principal. Historias y reels lo empujan como punto de entrada a la marca y a la tienda.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">💰</div>
-          <div class="item-body">
-            <div class="item-title">Evaluación de pauta — ~15 Junio</div>
-            <div class="item-sub">Con un banco amplio de creativos ganadores y variedad de UGC, se toma la decisión de qué se pauta y con qué budget. Antes de eso, no se gasta en pauta.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🎬</div>
-          <div class="item-body">
-            <div class="item-title">Planificación de siguientes grabaciones</div>
-            <div class="item-sub">Más formatos con los fundadores: segunda tertulia, formato conferencia, contenido enfocado en un problema estético facial específico con el producto como solución.</div>
-          </div>
-        </div>
+        <div class="item"><div class="item-icon">📱</div><div class="item-body"><div class="item-title">Contenido de dueños + UGC en el feed</div><div class="item-sub">Los dos bancos de contenido se publican de manera coordinada. El mix desplaza progresivamente el tono anterior — sin anunciar el cambio, siendo el cambio.</div></div></div>
+        <div class="item"><div class="item-icon">🔍</div><div class="item-body"><div class="item-title">Testeo — búsqueda de creativos ganadores</div><div class="item-sub">Se analiza qué formatos generan más interacción, qué topics resuenan más y qué estilo de edición engancha. Los datos dictan las siguientes grabaciones.</div></div></div>
+        <div class="item"><div class="item-icon">✨</div><div class="item-body"><div class="item-title">Skin Quiz como protagonista del feed</div><div class="item-sub">El cuestionario de la web se vuelve el lead magnet principal. Historias y reels lo empujan como punto de entrada a la marca y a la tienda.</div></div></div>
+        <div class="item"><div class="item-icon">💰</div><div class="item-body"><div class="item-title">Evaluación de pauta — ~15 Junio</div><div class="item-sub">Con un banco amplio de creativos ganadores y variedad de UGC, se toma la decisión de qué se pauta y con qué budget. Antes de eso, no se gasta en pauta.</div></div></div>
+        <div class="item"><div class="item-icon">🎬</div><div class="item-body"><div class="item-title">Planificación de siguientes grabaciones</div><div class="item-sub">Segunda tertulia, formato conferencia, contenido enfocado en un problema estético facial específico con el producto como solución.</div></div></div>
       </div>
     </div>
   </div>
@@ -578,88 +550,158 @@
       <div class="fase-num">Fase 04</div>
       <div class="fase-fecha">Julio 2026</div>
       <h2>Pauta,<br>escala y<br><em>TikTok.</em></h2>
-      <p class="fase-desc">
-        Con creativos probados y comunidad creciendo, se activan las estrategias
-        de distribución más pesadas. A definir según lo que enseñe junio.
-      </p>
-      <div class="fase-img">
-        <img src="https://theskinclub.mx/cdn/shop/files/FOTOSDEPRODUCTO.png" alt="Dúo Antiedad" />
-      </div>
+      <p class="fase-desc">Con creativos probados y comunidad creciendo, se activan las estrategias de distribución más pesadas.</p>
+      <div class="fase-img"><img src="https://theskinclub.mx/cdn/shop/files/FOTOSDEPRODUCTO.png" alt="Producto" /></div>
     </div>
     <div class="fase-right">
       <div class="items">
-        <div class="item">
-          <div class="item-icon">📣</div>
-          <div class="item-body">
-            <div class="item-title">Pautas activas con creativos ganadores</div>
-            <div class="item-sub">Meta Ads con los formatos que ya probaron funcionar en orgánico. Las campañas no se arman desde cero — se escalan los que ya resonaron.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🛍</div>
-          <div class="item-body">
-            <div class="item-title">TikTok Shop + microinfluencers</div>
-            <div class="item-sub">Apertura de TikTok Shop vinculado a Shopify. Programa de microinfluencers en comisión por venta — no tarifa plana. El contenido UGC generado en fase 2 se reutiliza como creativos.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🎯</div>
-          <div class="item-body">
-            <div class="item-title">Producto ancla en pauta</div>
-            <div class="item-sub">El producto con más tracción en la tienda toma el centro de la estrategia de distribución. Un problema estético específico, un producto como solución, una campaña clara.</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-icon">🔄</div>
-          <div class="item-body">
-            <div class="item-title">Revisión de estrategia → Q2</div>
-            <div class="item-sub">Con dos meses de data orgánica y pauta: qué ajustamos, qué escalamos, qué descartamos. La iguala es mensual — julio es ya el tercer mes. El Q2 se planea con números, no con suposiciones.</div>
-          </div>
-        </div>
+        <div class="item"><div class="item-icon">📣</div><div class="item-body"><div class="item-title">Pautas activas con creativos ganadores</div><div class="item-sub">Meta Ads con los formatos que ya probaron funcionar en orgánico. Las campañas no se arman desde cero — se escalan los que ya resonaron.</div></div></div>
+        <div class="item"><div class="item-icon">🛍</div><div class="item-body"><div class="item-title">TikTok Shop + microinfluencers</div><div class="item-sub">Apertura de TikTok Shop vinculado a Shopify. Programa de microinfluencers en comisión por venta — no tarifa plana. El UGC de fase 2 se reutiliza como creativos.</div></div></div>
+        <div class="item"><div class="item-icon">🎯</div><div class="item-body"><div class="item-title">Producto ancla en pauta</div><div class="item-sub">El producto con más tracción en la tienda toma el centro de la estrategia. Un problema estético específico, un producto como solución, una campaña clara.</div></div></div>
+        <div class="item"><div class="item-icon">🔄</div><div class="item-body"><div class="item-title">Revisión de estrategia → Q2</div><div class="item-sub">Con dos meses de data orgánica y pauta: qué ajustamos, qué escalamos, qué descartamos. La iguala es mensual — julio es el tercer mes. El Q2 se planea con números.</div></div></div>
       </div>
     </div>
   </div>
 
   <!-- SLIDE 5 — HORIZONTE -->
   <div class="slide s-horizonte" data-index="5">
-    <div class="horiz-eyebrow">
-      <div class="line"></div>
-      <span>Más allá del Q1</span>
-    </div>
+    <div class="horiz-eyebrow"><div class="line"></div><span>Más allá del Q1</span></div>
     <h2>Las puertas que<br>se abren cuando<br><em>el club funciona.</em></h2>
-    <p class="sub">
-      Cuando el contenido orgánico ya trabaja y la comunidad crece,
-      estas son las siguientes etapas naturales. Las fechas dependen
-      de qué tan rápido avance el Q1.
-    </p>
+    <p class="sub">Cuando el contenido orgánico ya trabaja y la comunidad crece, estas son las siguientes etapas naturales.</p>
     <div class="horiz-cards">
-      <div class="horiz-card">
-        <div class="hc-num">Siguiente etapa A</div>
-        <h4>Programa de Lealtad</h4>
-        <p>Membresía del Skin Club con beneficios concretos. Acceso anticipado a nuevos productos, descuentos exclusivos, comunidad activa. El nombre ya lo pide — solo hay que construirlo.</p>
-      </div>
-      <div class="horiz-card">
-        <div class="hc-num">Siguiente etapa B</div>
-        <h4>Distribución Ampliada</h4>
-        <p>El modelo UGC replicado en más plazas. TikTok Shop con estructura de afiliados. La marca no tiene por qué ser solo GDL — a definir cuando tengamos la tracción que lo justifique.</p>
-      </div>
-      <div class="horiz-card">
-        <div class="hc-num">Siguiente etapa C</div>
-        <h4>El Producto Hero Propio</h4>
-        <p>Una vez que los datos de Shopify y el desempeño del contenido señalen cuál producto conecta más, se construye una narrativa de marca alrededor de ese producto específico.</p>
-      </div>
+      <div class="horiz-card"><div class="hc-num">Siguiente etapa A</div><h4>Programa de Lealtad</h4><p>Membresía del Skin Club con beneficios concretos. Acceso anticipado a nuevos productos, descuentos exclusivos, comunidad activa. El nombre ya lo pide.</p></div>
+      <div class="horiz-card"><div class="hc-num">Siguiente etapa B</div><h4>Distribución Ampliada</h4><p>El modelo UGC replicado en más plazas. TikTok Shop con estructura de afiliados. La marca no tiene por qué ser solo GDL.</p></div>
+      <div class="horiz-card"><div class="hc-num">Siguiente etapa C</div><h4>El Producto Hero Propio</h4><p>Una vez que los datos señalen cuál producto conecta más, se construye una narrativa de marca alrededor de ese producto específico.</p></div>
     </div>
   </div>
 
 </div><!-- /deck -->
 
+
+<!-- ════════════════════════════════════════
+     MOBILE — LANDING PAGE VERTICAL
+════════════════════════════════════════ -->
+<div class="mobile-view">
+
+  <div class="m-topbar">
+    <div class="m-brand">The Skin Club × DV</div>
+    <div class="m-tag">Estrategia Q1 — 2026</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="m-hero">
+    <div class="m-hero-img">
+      <img src="https://theskinclub.mx/cdn/shop/files/PRODUCTOS_SHOPIFY_1_1ff067b4-8bb4-4ac5-bd78-4ab71c1a3f47.png" alt="The Skin Club" />
+    </div>
+    <div class="m-hero-body">
+      <div class="m-eyebrow"><div class="line"></div><span>Consultora DV — Plan de Arranque</span></div>
+      <h1>The Skin <em>Club.</em><br>Empieza ahora.</h1>
+      <p>Lo que vamos a hacer juntos en el primer trimestre. Concreto, en orden, con fechas.</p>
+      <div class="m-meta">
+        <div class="m-meta-item"><div class="lbl">Cliente</div><div class="val">The Skin Club — GDL</div></div>
+        <div class="m-meta-item"><div class="lbl">Arranque formal</div><div class="val">Junio 2026</div></div>
+        <div class="m-meta-item"><div class="lbl">Estratega</div><div class="val">Dante Vega</div></div>
+        <div class="m-meta-item"><div class="lbl">Iguala mensual</div><div class="val">$25,000 MXN</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FASE 1 -->
+  <div class="m-fase">
+    <div class="m-fase-header" data-num="1">
+      <div class="m-fase-num">Fase 01</div>
+      <div class="m-fase-fecha">7 — 14 Mayo</div>
+      <h2>Preparación y <em>grabaciones.</em></h2>
+    </div>
+    <div class="m-items">
+      <div class="m-item"><div class="m-icon">📊</div><div class="m-body"><div class="m-title">Análisis de redes y pauta <span class="m-tag done">En curso</span></div><div class="m-sub">Revisión del estado de la cuenta en Instagram y Facebook. Desempeño histórico de campañas.</div></div></div>
+      <div class="m-item"><div class="m-icon">📅</div><div class="m-body"><div class="m-title">Contenido de mayo programado</div><div class="m-sub">El contenido ya entregado por la creadora anterior se programa y distribuye. Mayo no queda en blanco.</div></div></div>
+      <div class="m-item"><div class="m-icon">🔑</div><div class="m-body"><div class="m-title">Pago de iguala + accesos <span class="m-tag now">Pendiente</span></div><div class="m-sub">Confirmación del pago de la primera iguala. Acceso a datos de Shopify para identificar el producto con más tracción.</div></div></div>
+      <div class="m-item"><div class="m-icon">🎙</div><div class="m-body"><div class="m-title">Grabación 1 — La Tertulia</div><div class="m-sub">Los 3 fundadores en conversación. Historia de origen, motivaciones, ciencia detrás de la marca. Una sesión que genera decenas de clips.</div></div></div>
+      <div class="m-item"><div class="m-icon">🎬</div><div class="m-body"><div class="m-title">Grabación 2 — Contenido de Valor</div><div class="m-sub">Contenido de los fundadores como ingenieros en biotecnología. Ingredientes, formulación, mitos del skincare. El lado científico con voz humana.</div></div></div>
+    </div>
+  </div>
+
+  <!-- FASE 2 -->
+  <div class="m-fase">
+    <div class="m-fase-header" data-num="2">
+      <div class="m-fase-num">Fase 02</div>
+      <div class="m-fase-fecha">15 Mayo — 7 Junio</div>
+      <h2>UGC y estilo de <em>edición.</em></h2>
+    </div>
+    <div class="m-items">
+      <div class="m-item"><div class="m-icon">🎥</div><div class="m-body"><div class="m-title">Campaña UGC <span class="m-tag ugc">Los Mochis</span></div><div class="m-sub">Contenido orgánico con personas con historia de piel. Derechos de imagen long-term — sirve para feed y para pauta.</div></div></div>
+      <div class="m-item"><div class="m-icon">📦</div><div class="m-body"><div class="m-title">Entrega de producto a colaboradores</div><div class="m-sub">Kits seleccionados según perfil de piel. Presupuesto estimado: $2,000 – $5,000 MXN con derechos incluidos.</div></div></div>
+      <div class="m-item"><div class="m-icon">🎨</div><div class="m-body"><div class="m-title">Estilo de edición definido</div><div class="m-sub">Ritmo, paleta, transiciones, tipografía en pantalla. Cuando junio arranque, el lenguaje visual ya está claro.</div></div></div>
+      <div class="m-item"><div class="m-icon">🗂</div><div class="m-body"><div class="m-title">Banco de contenido listo para junio</div><div class="m-sub">Al regresar el 7 de junio: clips de founders + UGC editado + estilo definido. Primera semana con contenido, no improvisación.</div></div></div>
+    </div>
+  </div>
+
+  <!-- FASE 3 -->
+  <div class="m-fase">
+    <div class="m-fase-header" data-num="3">
+      <div class="m-fase-num">Fase 03</div>
+      <div class="m-fase-fecha">Segunda semana Junio</div>
+      <h2>El club cobra <em>vida.</em></h2>
+    </div>
+    <div class="m-items">
+      <div class="m-item"><div class="m-icon">📱</div><div class="m-body"><div class="m-title">Contenido de dueños + UGC en el feed</div><div class="m-sub">Los dos bancos se publican coordinados. El mix desplaza el tono anterior — sin anunciar el cambio, siendo el cambio.</div></div></div>
+      <div class="m-item"><div class="m-icon">🔍</div><div class="m-body"><div class="m-title">Testeo — creativos ganadores</div><div class="m-sub">Qué formatos generan más interacción, qué topics resuenan, qué estilo engancha. Los datos dictan las siguientes grabaciones.</div></div></div>
+      <div class="m-item"><div class="m-icon">✨</div><div class="m-body"><div class="m-title">Skin Quiz como protagonista del feed</div><div class="m-sub">El cuestionario de la web se vuelve el lead magnet principal. Historias y reels lo empujan como punto de entrada.</div></div></div>
+      <div class="m-item"><div class="m-icon">💰</div><div class="m-body"><div class="m-title">Evaluación de pauta — ~15 Junio</div><div class="m-sub">Con banco amplio de creativos y UGC, se decide qué se pauta y con qué budget. Antes de eso, no se gasta en pauta.</div></div></div>
+      <div class="m-item"><div class="m-icon">🎬</div><div class="m-body"><div class="m-title">Planificación de siguientes grabaciones</div><div class="m-sub">Segunda tertulia, formato conferencia, contenido enfocado en un problema estético facial con el producto como solución.</div></div></div>
+    </div>
+  </div>
+
+  <!-- FASE 4 -->
+  <div class="m-fase">
+    <div class="m-fase-header" data-num="4">
+      <div class="m-fase-num">Fase 04</div>
+      <div class="m-fase-fecha">Julio 2026</div>
+      <h2>Pauta, escala y <em>TikTok.</em></h2>
+    </div>
+    <div class="m-items">
+      <div class="m-item"><div class="m-icon">📣</div><div class="m-body"><div class="m-title">Pautas activas con creativos ganadores</div><div class="m-sub">Meta Ads con los formatos que ya funcionaron en orgánico. Se escalan los que ya resonaron, no se arranca desde cero.</div></div></div>
+      <div class="m-item"><div class="m-icon">🛍</div><div class="m-body"><div class="m-title">TikTok Shop + microinfluencers</div><div class="m-sub">TikTok Shop vinculado a Shopify. Microinfluencers en comisión por venta, no tarifa plana. El UGC de fase 2 se reutiliza.</div></div></div>
+      <div class="m-item"><div class="m-icon">🎯</div><div class="m-body"><div class="m-title">Producto ancla en pauta</div><div class="m-sub">El producto con más tracción toma el centro. Un problema estético específico, un producto como solución, una campaña clara.</div></div></div>
+      <div class="m-item"><div class="m-icon">🔄</div><div class="m-body"><div class="m-title">Revisión de estrategia → Q2</div><div class="m-sub">Qué ajustamos, qué escalamos, qué descartamos. Julio es el tercer mes de iguala. El Q2 se planea con números.</div></div></div>
+    </div>
+  </div>
+
+  <!-- HORIZONTE -->
+  <div class="m-horizonte">
+    <div class="m-eyebrow" style="margin-bottom:16px"><div class="line"></div><span>Más allá del Q1</span></div>
+    <h2>Las puertas que se abren cuando <em>el club funciona.</em></h2>
+    <p class="m-sub-txt">Estas son las siguientes etapas naturales. Las fechas dependen de qué tan rápido avance el Q1.</p>
+    <div class="m-hcards">
+      <div class="m-hcard"><div class="hc-num">Siguiente etapa A</div><h4>Programa de Lealtad</h4><p>Membresía del Skin Club con beneficios concretos. Acceso anticipado, descuentos exclusivos, comunidad activa. El nombre ya lo pide.</p></div>
+      <div class="m-hcard"><div class="hc-num">Siguiente etapa B</div><h4>Distribución Ampliada</h4><p>El modelo UGC replicado en más plazas. TikTok Shop con afiliados. La marca no tiene por qué ser solo GDL.</p></div>
+      <div class="m-hcard"><div class="hc-num">Siguiente etapa C</div><h4>El Producto Hero Propio</h4><p>Cuando los datos señalen cuál producto conecta más, se construye toda la narrativa de marca alrededor de él.</p></div>
+    </div>
+  </div>
+
+  <div class="m-footer">
+    <div class="m-footer-brand">Consultora DV</div>
+    <div class="m-footer-tag">The Skin Club × 2026</div>
+  </div>
+
+</div><!-- /mobile-view -->
+
+
 <script>
+  // ── DESKTOP DETECTION ──
+  const isMobile = () => window.innerWidth <= 768;
+  if (!isMobile()) document.body.classList.add('is-desktop');
+  window.addEventListener('resize', () => {
+    document.body.classList.toggle('is-desktop', !isMobile());
+  });
+
+  // ── SLIDE ENGINE ──
   const slides = document.querySelectorAll('.slide');
   const total = slides.length;
   let current = 0;
   let animating = false;
 
-  // Build dots
   const dotsEl = document.getElementById('dots');
   slides.forEach((_,i) => {
     const d = document.createElement('div');
@@ -669,11 +711,8 @@
   });
 
   function updateUI() {
-    // Progress
     document.getElementById('progress').style.width = ((current/(total-1))*100)+'%';
-    // Dots
     document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i===current));
-    // Arrows
     document.getElementById('arrowLeft').classList.toggle('hidden', current===0);
     document.getElementById('arrowRight').classList.toggle('hidden', current===total-1);
   }
@@ -685,7 +724,6 @@
     const from = current;
     current = idx;
 
-    // Salida del slide anterior
     slides[from].classList.remove('active');
     if (dir > 0) {
       slides[from].classList.add('exit-left');
@@ -694,23 +732,20 @@
       slides[from].style.opacity = '0';
     }
 
-    // Posicionar slide entrante sin transición (evita flash)
     slides[idx].style.transition = 'none';
     slides[idx].style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
     slides[idx].style.opacity = '0';
     slides[idx].classList.add('active');
 
-    // Animar entrada — sincronizar UI exactamente con el inicio visual
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         slides[idx].style.transition = '';
         slides[idx].style.transform = 'translateX(0)';
         slides[idx].style.opacity = '1';
-        updateUI(); // dots + barra sincronizan con la animación
+        updateUI();
       });
     });
 
-    // Limpiar slide saliente cuando termina la transición
     setTimeout(() => {
       slides[from].style.transform = '';
       slides[from].style.opacity = '';
@@ -722,19 +757,19 @@
   function next() { goTo(current+1); }
   function prev() { goTo(current-1); }
 
-  // Keyboard
   document.addEventListener('keydown', e => {
+    if (isMobile()) return;
     if (e.key==='ArrowRight'||e.key==='ArrowDown') next();
     if (e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
   });
 
-  // Touch/swipe — solo horizontal, ignora scroll vertical
   let touchX = 0, touchY = 0;
   document.addEventListener('touchstart', e => {
     touchX = e.touches[0].clientX;
     touchY = e.touches[0].clientY;
   });
   document.addEventListener('touchend', e => {
+    if (isMobile()) return;
     const dx = e.changedTouches[0].clientX - touchX;
     const dy = e.changedTouches[0].clientY - touchY;
     if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.8) {
